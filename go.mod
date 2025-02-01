@@ -5,7 +5,7 @@ go 1.23
 require (
 	github.com/alecthomas/chroma v0.10.0
 	github.com/alecthomas/kong v1.6.0
-	github.com/bakks/tiktoken-go v0.1.4-bakks-2
+	github.com/Rui-L/tiktoken-go v0.1.7-rui
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.2.4
 	github.com/charmbracelet/lipgloss v1.0.0

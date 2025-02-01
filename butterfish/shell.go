@@ -21,7 +21,7 @@ import (
 	"github.com/bakks/butterfish/util"
 	"github.com/sashabaranov/go-openai/jsonschema"
 
-	"github.com/bakks/tiktoken-go"
+	"github.com/Rui-L/tiktoken-go"
 	"github.com/mitchellh/go-ps"
 	"golang.org/x/term"
 )
