@@ -572,12 +572,11 @@ func (this *ButterfishCtx) ExecCommand(
 		}
 
 		req := &util.CompletionRequest{
-			Ctx:           this.Ctx,
-			Prompt:        prompt,
-			Model:         options.Indexquestion.Model,
-			MaxTokens:     options.Indexquestion.NumTokens,
-			Temperature:   options.Indexquestion.Temperature,
-			SystemMessage: "N/A",
+			Ctx:         this.Ctx,
+			Prompt:      prompt,
+			Model:       options.Indexquestion.Model,
+			MaxTokens:   options.Indexquestion.NumTokens,
+			Temperature: options.Indexquestion.Temperature,
 		}
 
 		_, err = this.LLMClient.CompletionStream(req, this.Out)
@@ -881,13 +880,12 @@ func (this *ButterfishCtx) execAndCheck(ctx context.Context, cmd string) error {
 		styleWriter := util.NewStyledWriter(this.Out, this.Config.Styles.Highlight)
 
 		req := &util.CompletionRequest{
-			Ctx:           this.Ctx,
-			Prompt:        prompt,
-			Model:         this.Config.ExeccheckModel,
-			MaxTokens:     this.Config.ExeccheckMaxTokens,
-			Temperature:   this.Config.ExeccheckTemperature,
-			SystemMessage: "N/A",
-			TokenTimeout:  this.Config.TokenTimeout,
+			Ctx:          this.Ctx,
+			Prompt:       prompt,
+			Model:        this.Config.ExeccheckModel,
+			MaxTokens:    this.Config.ExeccheckMaxTokens,
+			Temperature:  this.Config.ExeccheckTemperature,
+			TokenTimeout: this.Config.TokenTimeout,
 		}
 
 		response, err := this.LLMClient.CompletionStream(req, styleWriter)
@@ -1015,11 +1013,10 @@ func (this *ButterfishCtx) updateCommandRegister(cmd string) {
 func (this *ButterfishCtx) SummarizeChunks(chunks [][]byte) error {
 	writer := util.NewStyledWriter(this.Out, this.Config.Styles.Foreground)
 	req := &util.CompletionRequest{
-		Ctx:           this.Ctx,
-		Model:         this.Config.SummarizeModel,
-		MaxTokens:     this.Config.SummarizeMaxTokens,
-		Temperature:   this.Config.SummarizeTemperature,
-		SystemMessage: "N/A",
+		Ctx:         this.Ctx,
+		Model:       this.Config.SummarizeModel,
+		MaxTokens:   this.Config.SummarizeMaxTokens,
+		Temperature: this.Config.SummarizeTemperature,
 	}
 
 	if len(chunks) == 1 {

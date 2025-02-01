@@ -335,7 +335,7 @@ func (this *GPT) Completion(request *util.CompletionRequest) (*util.CompletionRe
 	var err error
 
 	if IsCompletionModel(request.Model) {
-		result, err = this.InstructCompletion(request)
+		result, err = nil, errors.New("Completion is not supported for this model")
 	} else if request.HistoryBlocks == nil {
 		result, err = this.SimpleChatCompletion(request)
 	} else {
@@ -363,7 +363,7 @@ func (this *GPT) CompletionStream(request *util.CompletionRequest, writer io.Wri
 	var err error
 
 	if IsCompletionModel(request.Model) {
-		result, err = this.InstructCompletionStream(request, writer)
+		result, err = nil, errors.New("Completion is not supported for this model")
 	} else if request.HistoryBlocks == nil {
 		result, err = this.SimpleChatCompletionStream(request, writer)
 	} else {
@@ -378,75 +378,24 @@ func (this *GPT) CompletionStream(request *util.CompletionRequest, writer io.Wri
 	return result, err
 }
 
-func (this *GPT) InstructCompletionStream(request *util.CompletionRequest, writer io.Writer) (*util.CompletionResponse, error) {
-	req := openai.CompletionRequest{
-		Prompt:      request.Prompt,
-		Model:       request.Model,
-		MaxTokens:   request.MaxTokens,
-		Temperature: request.Temperature,
-	}
-
-	strBuilder := strings.Builder{}
-
-	callback := func(resp openai.CompletionResponse) {
-		if resp.Choices == nil || len(resp.Choices) == 0 {
-			return
-		}
-
-		text := resp.Choices[0].Text
-		writer.Write([]byte(text))
-		strBuilder.WriteString(text)
-	}
-
-	if request.Verbose {
-		LogCompletionRequest(req)
-	}
-	stream, err := this.client.CreateCompletionStream(request.Ctx, req)
-	var id string
-
-	for {
-		response, err := stream.Recv()
-		if errors.Is(err, io.EOF) {
-			break
-		}
-
-		if err != nil {
-			return nil, err
-		}
-
-		callback(response)
-		id = response.ID
-	}
-	fmt.Fprintf(writer, "\n") // GPT doesn't finish with a newline
-
-	response := util.CompletionResponse{
-		Completion: strBuilder.String(),
-	}
-
-	if request.Verbose {
-		LogCompletionResponse(response, id)
-	}
-
-	return &response, err
-}
-
 func (this *GPT) SimpleChatCompletionStream(request *util.CompletionRequest, writer io.Writer) (*util.CompletionResponse, error) {
-	if request.SystemMessage == "" {
-		return nil, errors.New("system message required for full chat completion")
+	gptHistory := []openai.ChatCompletionMessage{}
+
+	if request.SystemMessage != "" {
+		gptHistory = append(gptHistory, openai.ChatCompletionMessage{
+			Role:    "system",
+			Content: request.SystemMessage,
+		})
 	}
+
+	gptHistory = append(gptHistory, openai.ChatCompletionMessage{
+		Role:    "user",
+		Content: request.Prompt,
+	})
 
 	req := openai.ChatCompletionRequest{
-		Model: request.Model,
-		Messages: []openai.ChatCompletionMessage{
-			{
-				Role:    "system",
-				Content: request.SystemMessage,
-			},
-			{
-				Role:    "user",
-				Content: request.Prompt,
-			},
-		},
+		Model:       request.Model,
+		Messages:    gptHistory,
 		MaxTokens:   request.MaxTokens,
 		Temperature: request.Temperature,
 		N:           1,
@@ -692,42 +641,6 @@ func (this *GPT) doChatStreamCompletion(
 	return &response, err
 }
 
-// Run a GPT completion request and return the response
-func (this *GPT) InstructCompletion(request *util.CompletionRequest) (*util.CompletionResponse, error) {
-	req := openai.CompletionRequest{
-		Prompt:      request.Prompt,
-		Model:       request.Model,
-		MaxTokens:   request.MaxTokens,
-		Temperature: request.Temperature,
-	}
-
-	if request.Verbose {
-		LogCompletionRequest(req)
-	}
-
-	resp, err := this.client.CreateCompletion(request.Ctx, req)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(resp.Choices) == 0 {
-		return nil, errors.New("No completions returned from a completion request with 200 response.")
-	}
-
-	text := resp.Choices[0].Text
-	// clean whitespace prefix and suffix from text
-	text = strings.TrimSpace(text)
-
-	response := util.CompletionResponse{
-		Completion: text,
-	}
-
-	if request.Verbose {
-		LogCompletionResponse(response, resp.ID)
-	}
-	return &response, nil
-}
-
 func (this *GPT) FullChatCompletion(request *util.CompletionRequest) (*util.CompletionResponse, error) {
 	gptHistory := ShellHistoryBlocksToGPTChat(request.SystemMessage, request.HistoryBlocks)
 
@@ -755,22 +668,23 @@ func (this *GPT) FullChatCompletion(request *util.CompletionRequest) (*util.Comp
 }
 
 func (this *GPT) SimpleChatCompletion(request *util.CompletionRequest) (*util.CompletionResponse, error) {
-	if request.SystemMessage == "" {
-		return nil, errors.New("system message is required for full chat completion")
+	gptHistory := []openai.ChatCompletionMessage{}
+
+	if request.SystemMessage != "" {
+		gptHistory = append(gptHistory, openai.ChatCompletionMessage{
+			Role:    "system",
+			Content: request.SystemMessage,
+		})
 	}
 
+	gptHistory = append(gptHistory, openai.ChatCompletionMessage{
+		Role:    "user",
+		Content: request.Prompt,
+	})
+
 	req := openai.ChatCompletionRequest{
-		Model: request.Model,
-		Messages: []openai.ChatCompletionMessage{
-			{
-				Role:    "system",
-				Content: request.SystemMessage,
-			},
-			{
-				Role:    "user",
-				Content: request.Prompt,
-			},
-		},
+		Model:       request.Model,
+		Messages:    gptHistory,
 		MaxTokens:   request.MaxTokens,
 		Temperature: request.Temperature,
 		N:           1,
