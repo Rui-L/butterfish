@@ -195,7 +195,7 @@ var GruvboxLight = ColorScheme{
 	Grey:       "#928374",
 }
 
-const BestCompletionModel = "gpt-3.5-turbo"
+const BestCompletionModel = "gpt-4o-mini"
 
 func MakeButterfishConfig() *ButterfishConfig {
 	colorScheme := &GruvboxDark

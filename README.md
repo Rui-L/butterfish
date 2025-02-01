@@ -85,7 +85,7 @@ How does this work? Shell mode _wraps_ your shell rather than replacing it.
 
 This pattern is shockingly effective because your shell history becomes the AI chat context. For example, if you `cat` a file to print it out then the AI will see it. If you tried a command that failed, the AI can see the command and the error.
 
-Shell mode defaults to using `gpt-3.5-turbo` for prompting, if you have access to GPT-4 you can use it with:
+Shell mode defaults to using `gpt-4o-mini` for prompting, if you have access to GPT-4 you can use it with:
 
 ```bash
 butterfish shell -m gpt-4
@@ -135,11 +135,11 @@ Flags:
 
   -b, --bin=STRING                 Shell to use (e.g. /bin/zsh), defaults to
                                    $SHELL.
-  -m, --prompt-model="gpt-3.5-turbo"
+  -m, --prompt-model="gpt-4o-mini"
                                    Model for when the user manually enters a
                                    prompt.
   -A, --autosuggest-disabled       Disable autosuggest.
-  -a, --autosuggest-model="gpt-3.5-turbo-instruct"
+  -a, --autosuggest-model="gpt-4o-mini"
                                    Model for autosuggest
   -t, --autosuggest-timeout=400    Delay after typing before autosuggest (lower
                                    values trigger more calls and are more
@@ -242,7 +242,7 @@ Run an LLM prompt without wrapping, stream results back. This is a
 straight-through call to the LLM from the command line with a given prompt.
 This accepts piped input, if there is both piped input and a prompt then they
 will be concatenated together (prompt first). It is recommended that you wrap
-the prompt with quotes. The default GPT model is gpt-3.5-turbo.
+the prompt with quotes. The default GPT model is gpt-4o-mini.
 
 Arguments:
   [<prompt> ...]    Prompt to use.
@@ -254,7 +254,7 @@ Flags:
                                  more verbosity, e.g. -vv.
   -V, --version                  Print version information and exit.
 
-  -m, --model="gpt-3.5-turbo"    GPT model to use for the prompt.
+  -m, --model="gpt-4o-mini"    GPT model to use for the prompt.
   -n, --num-tokens=1024          Maximum number of tokens to generate.
   -T, --temperature=0.7          Temperature to use for the prompt, higher
                                  temperature indicates more freedom/randomness
@@ -423,7 +423,7 @@ Commands:
     straight-through call to the LLM from the command line with a given prompt.
     This accepts piped input, if there is both piped input and a prompt then
     they will be concatenated together (prompt first). It is recommended that
-    you wrap the prompt with quotes. The default GPT model is gpt-3.5-turbo.
+    you wrap the prompt with quotes. The default GPT model is gpt-4o-mini.
 
   promptedit
     Like the prompt command, but this opens a local file with your default

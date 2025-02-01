@@ -173,7 +173,7 @@ var configs = []configuration{
 	{
 		Name:        "instruct-1",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, complete the command. Here is recent history from the user's shell:
 '''
 {history}
@@ -183,28 +183,28 @@ If a command appears recently in history and it matches the start of the command
 	{
 		Name:        "instruct-2",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, complete the command. Complete this command, respond with only the completion, no quotes:
 {history}`,
 	},
 	{
 		Name:        "instruct-3",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, complete the command. Complete this command, respond with only the completion, no quotes:
 {history}`,
 	},
 	{
 		Name:        "instruct-4",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, complete the command. If a command appears recently in history and it matches the start of the command, suggest that. Complete this command, respond with only the completion, no quotes:
 {history}`,
 	},
 	{
 		Name:        "instruct-5",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, complete the command. If a command appears recently in history and it matches the start of the command, suggest that.
 Here are examples of prompts and desired completions:
 prompt: > fi
@@ -220,7 +220,7 @@ Complete this command, respond with only the completion, no quotes:
 	{
 		Name:        "instruct-6",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `The user is typing a unix shell command, predict the command. If a command appears recently in history and it matches the start of the command, suggest that.
 Here are examples of prompts and predictions:
 
@@ -237,7 +237,7 @@ Predict the full command, respond with only the prediction, no quotes:
 	{
 		Name:        "instruct-7",
 		Temperature: 0.1,
-		Model:       "gpt-3.5-turbo-instruct",
+		Model:       "gpt-4o-mini",
 		Prompt: `You are a unix shell command autocompleter. I will give you the user's history, predict the full command they will type. You will find good suggestions in the user's history, suggest the full command.
 
 Here are examples of prompts and predictions:
@@ -264,7 +264,7 @@ I will give you the user's shell history including assistant messages. Predict t
 	{
 		Name:        "function-1",
 		Temperature: 0.2,
-		Model:       "gpt-3.5-turbo",
+		Model:       "gpt-4o-mini",
 		Sysmsg:      "You are a helpful assistant on the Unix shell. You are helping the user type a command. Call the completecommand function with the completion.",
 		Functions:   COMPLETE_FUNC,
 	},

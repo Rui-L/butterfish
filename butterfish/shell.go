@@ -31,8 +31,8 @@ import (
 // in Tiktoken
 // These models are used specifically for counting tokens to pack into
 // the prompt context
-const DEFAULT_AUTOSUGGEST_ENCODER = "gpt-3.5-turbo-instruct"
-const DEFAULT_PROMPT_ENCODER = "gpt-4-turbo"
+const DEFAULT_AUTOSUGGEST_ENCODER = "gpt-4o-mini"
+const DEFAULT_PROMPT_ENCODER = "gpt-4o-mini"
 
 const ESC_CUP = "\x1b[6n" // Request the cursor position
 const ESC_UP = "\x1b[%dA"
