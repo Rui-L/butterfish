@@ -20,8 +20,8 @@ import (
 	"github.com/spf13/afero"
 	"golang.org/x/term"
 
-	"github.com/bakks/butterfish/prompt"
-	"github.com/bakks/butterfish/util"
+	"github.com/Rui-L/butterfish/prompt"
+	"github.com/Rui-L/butterfish/util"
 )
 
 // Parse and execute a command in a butterfish context

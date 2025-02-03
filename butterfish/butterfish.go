@@ -21,9 +21,9 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"golang.org/x/term"
 
-	"github.com/bakks/butterfish/embedding"
-	"github.com/bakks/butterfish/prompt"
-	"github.com/bakks/butterfish/util"
+	"github.com/Rui-L/butterfish/embedding"
+	"github.com/Rui-L/butterfish/prompt"
+	"github.com/Rui-L/butterfish/util"
 )
 
 // Main driver for the Butterfish set of command line tools. These are tools

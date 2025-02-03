@@ -1,11 +1,11 @@
-module github.com/bakks/butterfish
+module github.com/Rui-L/butterfish
 
 go 1.23
 
 require (
+	github.com/Rui-L/tiktoken-go v0.1.7-rui
 	github.com/alecthomas/chroma v0.10.0
 	github.com/alecthomas/kong v1.6.0
-	github.com/Rui-L/tiktoken-go v0.1.7-rui
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/bubbletea v1.2.4
 	github.com/charmbracelet/lipgloss v1.0.0
